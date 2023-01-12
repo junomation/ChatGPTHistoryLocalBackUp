@@ -1,28 +1,18 @@
-// Listen for messages from the background script
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.action === "save") {
-        var elements = document.getElementsByTagName("main");
-        if(elements.length > 0) {
-            var element = elements[0];
-            var html = element.outerHTML;
-            var title = document.title;
-            // Send the HTML and title to the background script
-            chrome.runtime.sendMessage({
-                action: "html",
-                html: html,
-                title: title
-            });
-        } else {
-            console.log('element "main" not found');
-        }
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    var saveButton = document.getElementById("save-button");
-    saveButton.addEventListener("click", function() {
+    if (request.action === "saveContent") {
+        let main = document.getElementsByTagName('main');
+        let html = main.outerHTML;
+        let title = document.title;
         chrome.runtime.sendMessage({
-            action: "save"
+            action: "download",
+            html: html,
+            title: title
+        }, function(response) {
+            if(response && response.status === "success") {
+                sendResponse({ status: "success" });
+            } else {
+                sendResponse({ status: "error" });
+            }
         });
-    });
+    }
 });

@@ -1,20 +1,37 @@
-// Listen for messages from the content script
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.action === "html") {
-        var html = request.html;
-        var title = request.title;
-        // Download the HTML file with the title as the file name
-        chrome.downloads.download({
-            url: "data:text/html," + encodeURIComponent(html),
-            filename: title + ".html"
+    if (request.action === "save") {
+        let tabId = request.tabId;
+        return new Promise(function(resolve, reject) {
+            chrome.tabs.sendMessage(tabId, { action: "saveContent" }, function(response) {
+                if(response && response.status === "success") {
+                    resolve(response);
+                } else {
+                    reject(Error("It broke"));
+                }
+            });
         });
     }
 });
 
-// Listen for clicks on the extension button
-chrome.browserAction.onClicked.addListener(function(tab) {
-    // Send a message to the active tab to save the HTML
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, { action: "save" });
-    });
-});
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action === "download") {
+        return new Promise(function(resolve, reject) {
+            chrome.downloads.download({
+                url: "data:text/html," + encodeURIComponent(request.html),
+                filename: request.title + ".html"
+            }, function(downloadId) {
+                if (chrome.runtime.lastError) {
+                    console.log(chrome.runtime.lastError.message);
+                    reject(Error("It broke"));
+                }
+                if (downloadId === undefined) {
+                    console.log("Download failed");
+                    reject(Error("It broke"));
+                } else {
+                    console.log("Download started with ID: " + downloadId);
+                    resolve({status: "success", downloadId: downloadId});
+                }
+            });
+        });
+    }
+})    
