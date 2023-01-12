@@ -3,7 +3,14 @@ This Chrome Extension that saves ChatGPT conversation history.
 
 To load a Chrome extension that you have on your local drive, you would need to enable "developer mode" in the Chrome browser first. Here are the steps:
 
+You can download the zip at https://github.com/NapaNova/ChatGPTHistoryLocalBackUp/raw/main/ChatGPTHistoryLocalBackUp.zip and extract it a local folder.
+
+
+or
+
 clone this repostiory ```git clone https://github.com/NapaNova/ChatGPTHistoryLocalBackUp.git```
+
+And remember this folder path for later use when you need to load up the actual extension into chrome.
 
 Open the Chrome browser on your computer.
 Go to the Chrome menu by clicking on the three dots in the top-right corner of the browser window.
@@ -21,8 +28,15 @@ This process is used by developers to test their extension before publishing it 
 # ChatGPT聊天记录本地下载
 
 这个Chrome扩展包可以让你下载ChatGPT的聊天记录到本地
+
 首先下载这个git repo
+
+你可以下载zip文件 https://github.com/NapaNova/ChatGPTHistoryLocalBackUp/raw/main/ChatGPTHistoryLocalBackUp.zip
+
+或者用git clone来下载
 ```git clone https://github.com/NapaNova/ChatGPTHistoryLocalBackUp.git```
+
+请记住你解压缩的路劲或者是git clone的路劲，你需要在随后安装chrome扩展包的时候用到它。
 
 打开谷歌浏览器
 点击浏览器窗口右上角的三个点
