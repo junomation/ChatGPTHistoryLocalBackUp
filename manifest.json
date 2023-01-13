@@ -27,10 +27,12 @@
   "content_scripts": [
     {
       "matches": ["https://chat.openai.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_end"
     }
   ],
   "background": {
+    "matches": ["https://chat.openai.com/*"],
     "service_worker": "background.js"
   }
 }

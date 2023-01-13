@@ -8,6 +8,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 } else {
                     reject(Error("It broke"));
                 }
+                return true;
             });
         });
     }
@@ -22,15 +23,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }, function(downloadId) {
                 if (chrome.runtime.lastError) {
                     console.log(chrome.runtime.lastError.message);
-                    reject(Error("It broke"));
                 }
                 if (downloadId === undefined) {
                     console.log("Download failed");
-                    reject(Error("It broke"));
                 } else {
                     console.log("Download started with ID: " + downloadId);
                     resolve({status: "success", downloadId: downloadId});
                 }
+                return true;
             });
         });
     }

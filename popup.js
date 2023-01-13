@@ -20,8 +20,8 @@ saveButton.addEventListener("click", async function(){
             if(response && response.status === "success") {
                 resolve(response);
             } else {
-                reject(Error("It broke"));
             }
+            return true;
         });
     });
 });
